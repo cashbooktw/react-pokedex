@@ -1,0 +1,29 @@
+{
+  "name": "react-pokedex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "watchify src/main.jsx -v -t [ babelify --presets [ react ] ] -o public/js/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cashbooktw/react-pokedex.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cashbooktw/react-pokedex/issues"
+  },
+  "homepage": "https://github.com/cashbooktw/react-pokedex#readme",
+  "dependencies": {
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.3.0",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "reflux": "^0.4.1",
+    "watchify": "^3.7.0",
+    "whatwg-fetch": "^0.10.1"
+  }
+}
