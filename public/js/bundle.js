@@ -22043,13 +22043,14 @@ var Actions = require('../reflux/actions');
 var PokemonStore = require('../reflux/pokemonStore');
 var PokemonList = require('./PokemonList');
 var SortDropdown = require('./SortDropdown');
-
+var SearchBar = require('./SearchBar');
 var Pokedex = React.createClass({
   displayName: 'Pokedex',
 
   getInitialState: function () {
     return {
-      "sortMethod": "sortByID"
+      "sortMethod": "sortByID",
+      "filterCondition": ""
     };
   },
   render: function () {
@@ -22058,15 +22059,20 @@ var Pokedex = React.createClass({
       null,
       React.createElement(SortDropdown, { onChangeMethod: method => this.setState({
           "sortMethod": method
-        }) }),
-      React.createElement(PokemonList, { sortMethod: this.state.sortMethod })
+        })
+      }),
+      React.createElement(SearchBar, { onFilter: filterCondition => this.setState({
+          "filterCondition": filterCondition
+        })
+      }),
+      React.createElement(PokemonList, { sortMethod: this.state.sortMethod, filterCondition: this.state.filterCondition })
     );
   }
 });
 
 module.exports = Pokedex;
 
-},{"../reflux/actions":196,"../reflux/pokemonStore":197,"./PokemonList":192,"./SortDropdown":194,"react":170,"reflux":186}],191:[function(require,module,exports){
+},{"../reflux/actions":197,"../reflux/pokemonStore":198,"./PokemonList":192,"./SearchBar":194,"./SortDropdown":195,"react":170,"reflux":186}],191:[function(require,module,exports){
 var React = require('react');
 var PokemonType = require('./PokemonType');
 
@@ -22146,7 +22152,7 @@ const PokemonList = React.createClass({
     this.setState({ pokemons: pokemons });
   },
   render() {
-    var onSort = function (method) {
+    var pokeSort = function (method) {
       switch (method) {
         case "sortByID":
           var sortByID = function (a, b) {
@@ -22177,8 +22183,35 @@ const PokemonList = React.createClass({
       }
     }.bind(this);
 
-    onSort(this.props.sortMethod);
-    var pokemonItems = this.state.pokemons.map(item => {
+    pokeSort(this.props.sortMethod);
+
+    // var pokeFilter = function(filterCondition) {
+    //   if (filterCondition.trim() !== "") {
+    //
+    //   }
+    // }
+    //
+    // pokeSort(this.props.filterCondition);
+
+    // var pokemonItems = this.state.pokemons.map((item) => {
+    //   return (
+    //     <PokemonItem
+    //       key={item.id}
+    //       id={item.id}
+    //       img={item.img}
+    //       name={item.name}
+    //       types={item.types}
+    //       /* height={item.height}
+    //       weight={item.weight} */
+    //     />
+    //   )
+    // });
+    var isContainKeywords = function (item) {
+      var regexp = new RegExp(this.props.filterCondition);
+      return regexp.test(item.id) || regexp.test(item.name);
+    }.bind(this);
+
+    var pokemonItems = this.state.pokemons.filter(isContainKeywords).map(item => {
       return React.createElement(PokemonItem, {
         key: item.id,
         id: item.id,
@@ -22205,7 +22238,7 @@ const PokemonList = React.createClass({
 
 module.exports = PokemonList;
 
-},{"../reflux/actions":196,"../reflux/pokemonStore":197,"./PokemonItem":191,"react":170,"reflux":186}],193:[function(require,module,exports){
+},{"../reflux/actions":197,"../reflux/pokemonStore":198,"./PokemonItem":191,"react":170,"reflux":186}],193:[function(require,module,exports){
 var React = require('react');
 
 const PokemonType = React.createClass({
@@ -22251,6 +22284,48 @@ module.exports = PokemonType;
 },{"react":170}],194:[function(require,module,exports){
 var React = require('react');
 
+var SearchBar = React.createClass({
+  displayName: "SearchBar",
+
+  getInitialState: function () {
+    return {
+      "newText": ""
+    };
+  },
+  onClick: function () {
+    this.props.onFilter(this.state.newText);
+  },
+  onInputChange: function (e) {
+    this.setState({ newText: e.target.value });
+  },
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "col-lg-6" },
+      React.createElement(
+        "div",
+        { className: "input-group" },
+        React.createElement("input", { type: "text", className: "form-control", placeholder: "Search for...", onChange: this.onInputChange }),
+        React.createElement(
+          "span",
+          { className: "input-group-btn" },
+          React.createElement(
+            "button",
+            { className: "btn btn-default", type: "button", onClick: this.onClick },
+            "Go!"
+          )
+        )
+      )
+    );
+  }
+
+});
+
+module.exports = SearchBar;
+
+},{"react":170}],195:[function(require,module,exports){
+var React = require('react');
+
 var SortDropdown = React.createClass({
   displayName: "SortDropdown",
 
@@ -22265,16 +22340,24 @@ var SortDropdown = React.createClass({
     onChangeMethod(method);
   },
   render: function () {
+    var btnValue = {
+      "sortByID": "ID",
+      "sortByReverseID": "Reverse ID",
+      "sortByNameAtoZ": "Name A-Z",
+      "sortByNameZtoA": "Name Z-A"
+    };
     return React.createElement(
       "div",
-      null,
+      { className: "col-lg-6" },
+      "Sort By",
       React.createElement(
         "div",
         { className: "btn-group" },
         React.createElement(
           "button",
           { type: "button", className: "btn btn-default dropdown-toggle", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" },
-          "Sort by  ",
+          btnValue[this.state.method],
+          "  ",
           React.createElement("span", { className: "caret" })
         ),
         React.createElement(
@@ -22325,20 +22408,20 @@ var SortDropdown = React.createClass({
 
 module.exports = SortDropdown;
 
-},{"react":170}],195:[function(require,module,exports){
+},{"react":170}],196:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Pokedex = require('./components/App');
 ReactDOM.render(React.createElement(Pokedex, null), document.getElementById('test'));
 
-},{"./components/App":190,"react":170,"react-dom":30}],196:[function(require,module,exports){
+},{"./components/App":190,"react":170,"react-dom":30}],197:[function(require,module,exports){
 var Reflux = require('reflux');
 
 var Actions = Reflux.createActions(["getPokemons"]);
 
 module.exports = Actions;
 
-},{"reflux":186}],197:[function(require,module,exports){
+},{"reflux":186}],198:[function(require,module,exports){
 let HTTP = require('../services/fetch');
 let Reflux = require('reflux');
 var Actions = require('./actions');
@@ -22378,7 +22461,7 @@ let PokemonStore = Reflux.createStore({
 
 module.exports = PokemonStore;
 
-},{"../services/fetch":198,"./actions":196,"reflux":186}],198:[function(require,module,exports){
+},{"../services/fetch":199,"./actions":197,"reflux":186}],199:[function(require,module,exports){
 let Fetch = require('whatwg-fetch');
 // let baseUrl = "http://pokeapi.co/api/v2/pokemon";
 
@@ -22392,4 +22475,4 @@ let httpservice = {
 
 module.exports = httpservice;
 
-},{"whatwg-fetch":189}]},{},[195]);
+},{"whatwg-fetch":189}]},{},[196]);

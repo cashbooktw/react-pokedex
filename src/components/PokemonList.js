@@ -26,7 +26,7 @@ const PokemonList = React.createClass({
     this.setState({pokemons: pokemons});
   },
   render () {
-    var onSort = function(method) {
+    var pokeSort = function(method) {
       switch(method) {
         case "sortByID":
           var sortByID = function(a, b) {
@@ -57,8 +57,38 @@ const PokemonList = React.createClass({
       }
     }.bind(this);
 
-    onSort(this.props.sortMethod);
-    var pokemonItems = this.state.pokemons.map((item) => {
+    pokeSort(this.props.sortMethod);
+
+    // var pokeFilter = function(filterCondition) {
+    //   if (filterCondition.trim() !== "") {
+    //
+    //   }
+    // }
+    //
+    // pokeSort(this.props.filterCondition);
+
+    // var pokemonItems = this.state.pokemons.map((item) => {
+    //   return (
+    //     <PokemonItem
+    //       key={item.id}
+    //       id={item.id}
+    //       img={item.img}
+    //       name={item.name}
+    //       types={item.types}
+    //       /* height={item.height}
+    //       weight={item.weight} */
+    //     />
+    //   )
+    // });
+    var isContainKeywords = function(item) {
+      var regexp = new RegExp(this.props.filterCondition);
+      return (regexp.test(item.id) || regexp.test(item.name));
+    }.bind(this);
+
+    var pokemonItems = this.state.pokemons.filter(isContainKeywords).
+
+
+    map((item) => {
       return (
         <PokemonItem
           key={item.id}

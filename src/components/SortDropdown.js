@@ -12,11 +12,17 @@ var SortDropdown = React.createClass({
     onChangeMethod(method);
   },
   render: function() {
+    var btnValue = {
+      "sortByID": "ID",
+      "sortByReverseID": "Reverse ID",
+      "sortByNameAtoZ": "Name A-Z",
+      "sortByNameZtoA": "Name Z-A"
+    }
     return (
-      <div>
+      <div className="col-lg-6">Sort By
         <div className="btn-group">
           <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sort by  <span className="caret"></span>
+            {btnValue[this.state.method]}  <span className="caret"></span>
           </button>
           <ul className="dropdown-menu">
             <li onClick={this.onClick.bind(this, "sortByID")}><a href="#">ID</a></li>
