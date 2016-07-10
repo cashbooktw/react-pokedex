@@ -22074,7 +22074,138 @@ var Pokedex = React.createClass({
 
 module.exports = Pokedex;
 
-},{"../reflux/actions":198,"../reflux/pokemonStore":199,"./PageHeader":191,"./PokemonList":193,"./SearchBar":195,"./SortDropdown":196,"react":170,"reflux":186}],191:[function(require,module,exports){
+},{"../reflux/actions":201,"../reflux/pokemonStore":202,"./PageHeader":194,"./PokemonList":196,"./SearchBar":198,"./SortDropdown":199,"react":170,"reflux":186}],191:[function(require,module,exports){
+var React = require('react');
+var ItemHeader = require('./ItemHeader');
+var ItemImg = require('./ItemImg');
+var HTTP = require('../services/fetch');
+var ItemDetail = React.createClass({
+  displayName: 'ItemDetail',
+
+  // <button type="button" className="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  //   Launch demo modal
+  // </button>
+  // <div className="modal fade" tabIndex="-1" role="dialog" id="myModal">
+  //   <div className="modal-dialog">
+  //     <div className="modal-content">
+  //       <div className="modal-header">
+  //         <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  //         <h4 className="modal-title">Modal title</h4>
+  //       </div>
+  //       <div className="modal-body">
+  //         <p>One fine body&hellip;</p>
+  //       </div>
+  //       <div className="modal-footer">
+  //         <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+  //         <button type="button" className="btn btn-primary">Save changes</button>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>
+  render: function () {
+    var closeBtnStyle = {
+      marginLeft: 10
+    };
+    var species = HTTP.get;
+    return React.createElement(
+      'div',
+      { className: 'modal fade', tabIndex: '-1', role: 'dialog', id: 'myModal' },
+      React.createElement(
+        'div',
+        { className: 'modal-dialog modal-lg' },
+        React.createElement(
+          'div',
+          { className: 'modal-content' },
+          React.createElement(
+            'div',
+            { className: 'modal-header' },
+            React.createElement(
+              'button',
+              { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close', style: closeBtnStyle },
+              React.createElement(
+                'span',
+                { 'aria-hidden': 'true' },
+                '×'
+              )
+            ),
+            React.createElement(
+              'h4',
+              { className: 'modal-title' },
+              React.createElement(ItemHeader, { id: this.props.id, name: this.props.name })
+            )
+          ),
+          React.createElement(
+            'div',
+            { className: 'modal-body' },
+            React.createElement(ItemImg, { className: 'col-xs-3', img: this.props.img })
+          )
+        )
+      )
+    );
+  }
+
+});
+
+module.exports = ItemDetail;
+
+},{"../services/fetch":203,"./ItemHeader":192,"./ItemImg":193,"react":170}],192:[function(require,module,exports){
+var React = require('react');
+
+var ItemHeader = React.createClass({
+  displayName: "ItemHeader",
+
+
+  render: function () {
+    var indexStyle = {
+      float: "left"
+    };
+    var nameStyle = {
+      float: "right"
+    };
+    return React.createElement(
+      "div",
+      { className: "middle-title" },
+      " ",
+      React.createElement(
+        "span",
+        { style: indexStyle },
+        "No.",
+        this.props.id
+      ),
+      React.createElement(
+        "span",
+        { style: nameStyle },
+        this.props.name
+      )
+    );
+  }
+
+});
+
+module.exports = ItemHeader;
+
+},{"react":170}],193:[function(require,module,exports){
+var React = require('react');
+
+var ItemImg = React.createClass({
+  displayName: 'ItemImg',
+
+  render: function () {
+    var imgStyle = {
+      background: 'white url("' + this.props.img + '") no-repeat center center',
+      backgroundSize: "contain",
+      borderRadius: 20,
+      border: '2px solid #ccc',
+      height: 200
+    };
+    return React.createElement('div', { style: imgStyle });
+  }
+
+});
+
+module.exports = ItemImg;
+
+},{"react":170}],194:[function(require,module,exports){
 var React = require('react');
 var PropTypes = React.PropTypes;
 
@@ -22098,14 +22229,26 @@ var PageHeader = React.createClass({
 
 module.exports = PageHeader;
 
-},{"react":170}],192:[function(require,module,exports){
+},{"react":170}],195:[function(require,module,exports){
 var React = require('react');
 var PokemonType = require('./PokemonType');
-
+var ItemDetail = require('./ItemDetail');
+var ItemHeader = require('./ItemHeader');
+var ItemImg = require('./ItemImg');
 const PokemonItem = React.createClass({
   displayName: 'PokemonItem',
 
+
   render() {
+    const {
+      id,
+      img,
+      name,
+      types,
+      height,
+      weight
+    } = this.props;
+
     var pokemonTypes = this.props.types.map(item => {
       return React.createElement(PokemonType, { key: item, type: item });
     });
@@ -22128,44 +22271,40 @@ const PokemonItem = React.createClass({
     var itemConatiner = {
       padding: 5
     };
-    var panelColor = {
-      backgroundColor: "#DD7882"
-    };
-    if (this.props.id !== 0) {
-      this.props.name = this.props.name.substring(0, 1).toUpperCase() + this.props.name.substring(1, this.props.name.length);
 
+    if (this.props.id !== 0) {
       return React.createElement(
         'div',
         { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12', style: itemConatiner },
         React.createElement(
           'div',
-          { className: 'panel panel-default' },
+          { className: 'panel panel-success', 'data-toggle': 'modal', 'data-target': '#myModal' },
           React.createElement(
             'div',
-            { className: 'panel-heading middle-title', style: panelColor },
-            ' ',
-            React.createElement(
-              'span',
-              { style: indexStyle },
-              this.props.id
-            ),
-            React.createElement(
-              'span',
-              { style: nameStyle },
-              this.props.name
-            )
+            { className: 'panel-heading' },
+            React.createElement(ItemHeader, { id: this.props.id, name: this.props.name, img: this.props.img })
           ),
           React.createElement(
             'div',
             { className: 'panel-body' },
-            React.createElement('div', { style: imgStyle }),
+            React.createElement(ItemImg, { img: this.props.img }),
             React.createElement(
               'div',
               null,
               pokemonTypes
             )
           )
-        )
+        ),
+        React.createElement(ItemDetail, {
+          id: 'myModal',
+          key: id,
+          id: id,
+          img: img,
+          name: name,
+          types: types,
+          height: height,
+          weight: weight
+        })
       );
     } else {
       return React.createElement('div', null);
@@ -22184,7 +22323,7 @@ const PokemonItem = React.createClass({
 
 module.exports = PokemonItem;
 
-},{"./PokemonType":194,"react":170}],193:[function(require,module,exports){
+},{"./ItemDetail":191,"./ItemHeader":192,"./ItemImg":193,"./PokemonType":197,"react":170}],196:[function(require,module,exports){
 var React = require('react');
 var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
@@ -22281,9 +22420,9 @@ const PokemonList = React.createClass({
         id: item.id,
         img: item.img,
         name: item.name,
-        types: item.types
-        /* height={item.height}
-        weight={item.weight} */
+        types: item.types,
+        height: item.height,
+        weight: item.weight
       });
     });
 
@@ -22301,7 +22440,7 @@ const PokemonList = React.createClass({
 
 module.exports = PokemonList;
 
-},{"../reflux/actions":198,"../reflux/pokemonStore":199,"./PokemonItem":192,"react":170,"reflux":186}],194:[function(require,module,exports){
+},{"../reflux/actions":201,"../reflux/pokemonStore":202,"./PokemonItem":195,"react":170,"reflux":186}],197:[function(require,module,exports){
 var React = require('react');
 
 const PokemonType = React.createClass({
@@ -22345,7 +22484,7 @@ const PokemonType = React.createClass({
 });
 module.exports = PokemonType;
 
-},{"react":170}],195:[function(require,module,exports){
+},{"react":170}],198:[function(require,module,exports){
 var React = require('react');
 
 var SearchBar = React.createClass({
@@ -22387,7 +22526,7 @@ var SearchBar = React.createClass({
 
 module.exports = SearchBar;
 
-},{"react":170}],196:[function(require,module,exports){
+},{"react":170}],199:[function(require,module,exports){
 var React = require('react');
 
 var SortDropdown = React.createClass({
@@ -22476,20 +22615,21 @@ var SortDropdown = React.createClass({
 
 module.exports = SortDropdown;
 
-},{"react":170}],197:[function(require,module,exports){
+},{"react":170}],200:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Pokedex = require('./components/App');
-ReactDOM.render(React.createElement(Pokedex, null), document.getElementById('test'));
+var App = require('./components/App');
 
-},{"./components/App":190,"react":170,"react-dom":30}],198:[function(require,module,exports){
+ReactDOM.render(React.createElement(App, null), document.getElementById('test'));
+
+},{"./components/App":190,"react":170,"react-dom":30}],201:[function(require,module,exports){
 var Reflux = require('reflux');
 
 var Actions = Reflux.createActions(["getPokemons"]);
 
 module.exports = Actions;
 
-},{"reflux":186}],199:[function(require,module,exports){
+},{"reflux":186}],202:[function(require,module,exports){
 let HTTP = require('../services/fetch');
 let Reflux = require('reflux');
 var Actions = require('./actions');
@@ -22529,7 +22669,7 @@ let PokemonStore = Reflux.createStore({
 
 module.exports = PokemonStore;
 
-},{"../services/fetch":200,"./actions":198,"reflux":186}],200:[function(require,module,exports){
+},{"../services/fetch":203,"./actions":201,"reflux":186}],203:[function(require,module,exports){
 let Fetch = require('whatwg-fetch');
 // let baseUrl = "http://pokeapi.co/api/v2/pokemon";
 
@@ -22543,4 +22683,4 @@ let httpservice = {
 
 module.exports = httpservice;
 
-},{"whatwg-fetch":189}]},{},[197]);
+},{"whatwg-fetch":189}]},{},[200]);

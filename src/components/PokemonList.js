@@ -97,8 +97,8 @@ const PokemonList = React.createClass({
           img={item.img}
           name={item.name}
           types={item.types}
-          /* height={item.height}
-          weight={item.weight} */
+          height={item.height}
+          weight={item.weight}
           />
       )
     });
