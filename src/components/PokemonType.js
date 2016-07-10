@@ -27,6 +27,7 @@ const PokemonType = React.createClass({
       backgroundColor: typeColor[this.props.type],
       fontSize: 16,
       marginRight: 5,
+      marginTop: 5,
       float: "right"
     };
     return (

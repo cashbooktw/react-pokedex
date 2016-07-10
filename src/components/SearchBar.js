@@ -14,7 +14,7 @@ var SearchBar = React.createClass({
   },
   render: function() {
     return (
-      <div className="col-lg-6">
+      <div className="col-md-3 col-sm-4 col-xs-6 col-md-offset-7 col-sm-offset-6 col-xs-offset-3 searchbar">
         <div className="input-group">
           <input type="text" className="form-control" placeholder="Search for..." onChange={this.onInputChange} />
           <span className="input-group-btn">

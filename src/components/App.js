@@ -5,6 +5,7 @@ var PokemonStore = require('../reflux/pokemonStore');
 var PokemonList = require('./PokemonList');
 var SortDropdown = require('./SortDropdown');
 var SearchBar = require('./SearchBar');
+var PageHeader = require('./PageHeader');
 var Pokedex = React.createClass({
   getInitialState: function() {
     return {
@@ -15,6 +16,9 @@ var Pokedex = React.createClass({
   render: function() {
     return (
       <div>
+        <PageHeader title="Pokemon Index">
+
+        </PageHeader>
         <SortDropdown onChangeMethod={
             (method) => this.setState({
               "sortMethod": method

@@ -1,0 +1,32 @@
+/*Base*/
+
+.middle-title {
+  font-size: 20px;
+}
+
+/*Layout*/
+
+.mHeader {
+  background-color: #82DD78;
+}
+
+.sortdropdown {
+  position: absolute;
+  top: 10px;
+}
+
+.searchbar {
+  position: absolute;
+  top: 10px;
+}
+
+/*.mainContent {
+  margin-top: 20px;
+}*/
+/*Module*/
+.panel-heading {
+  background-color: #82DD78;
+}
+
+/*State*/
+/*Theme*/

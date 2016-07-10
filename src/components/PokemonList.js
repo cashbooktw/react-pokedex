@@ -10,7 +10,7 @@ const PokemonList = React.createClass({
     return {
       pokemons: [{
         key: 0,
-        id: "id",
+        id: 0,
         name: "name",
         types: [],
         height: 0,
@@ -81,14 +81,15 @@ const PokemonList = React.createClass({
     //   )
     // });
     var isContainKeywords = function(item) {
-      var regexp = new RegExp(this.props.filterCondition);
+      var regexp = new RegExp(this.props.filterCondition, "i");
       return (regexp.test(item.id) || regexp.test(item.name));
     }.bind(this);
 
-    var pokemonItems = this.state.pokemons.filter(isContainKeywords).
-
-
+    var pokemonItems = this.state.pokemons.
+    filter(isContainKeywords).
     map((item) => {
+      item.name = item.name.substring(0,1).toUpperCase() +
+                        item.name.substring(1,item.name.length);
       return (
         <PokemonItem
           key={item.id}
@@ -98,13 +99,12 @@ const PokemonList = React.createClass({
           types={item.types}
           /* height={item.height}
           weight={item.weight} */
-        />
+          />
       )
     });
 
     return (
-      <div>
-        Basic descriptions.
+      <div className="mainContent">
         <div>{pokemonItems}</div>
       </div>
     )
