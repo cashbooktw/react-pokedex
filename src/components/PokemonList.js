@@ -3,28 +3,45 @@ var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
 var PokemonStore = require('../reflux/pokemonStore');
 var PokemonItem = require('./PokemonItem');
+var speciesStore = require('../reflux/speciesStore');
 
 const PokemonList = React.createClass({
-  mixins: [Reflux.listenTo(PokemonStore, 'onChange')],
+  mixins: [Reflux.listenTo(PokemonStore, 'onPokemonChange')
+          //  Reflux.listenTo(speciesStore, 'onChange')
+  ],
   getInitialState: function() {
     return {
       pokemons: [{
         key: 0,
         id: 0,
-        name: "name",
+        name: "",
         types: [],
         height: 0,
         weight: 0
       }]
+      // "species": []
     };
   },
   componentWillMount: function() {
     Actions.getPokemons();
+    console.log("this.state.name = " + this.state.name);
+    // if (this.state.name){
+    //   Actions.getSpecies(this.props.name);
+    // }
   },
-  onChange: function(event, pokemons) {
+  // componentDidMount: function() {
+  //   console.log("componentDidMount");
+  // },
+  onPokemonChange: function(event, pokemons) {
     // console.log(...this.state.pokemons);
     this.setState({pokemons: pokemons});
   },
+  // onChange: function(event, species) {
+  //   this.setState({"species" : species});
+  //   console.log(this.state.species);
+  //   console.log(this.props.name);
+  // },
+
   render () {
     var pokeSort = function(method) {
       switch(method) {
@@ -88,17 +105,22 @@ const PokemonList = React.createClass({
     var pokemonItems = this.state.pokemons.
     filter(isContainKeywords).
     map((item) => {
-      item.name = item.name.substring(0,1).toUpperCase() +
+      var upperCaseName = item.name;
+      upperCaseName = item.name.substring(0,1).toUpperCase() +
                         item.name.substring(1,item.name.length);
+      // console.log("upperCaseName = " + upperCaseName);
+      // console.log("item.name = " + item.name);
       return (
         <PokemonItem
           key={item.id}
-          id={item.id}
+          index={item.id}
           img={item.img}
           name={item.name}
           types={item.types}
           height={item.height}
           weight={item.weight}
+          ucName={upperCaseName}
+          blurb={item.blurb}
           />
       )
     });

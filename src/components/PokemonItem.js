@@ -3,19 +3,29 @@ var PokemonType = require('./PokemonType');
 var ItemDetail = require('./ItemDetail');
 var ItemHeader = require('./ItemHeader');
 var ItemImg = require('./ItemImg');
-const PokemonItem = React.createClass({
+var Reflux = require('reflux');
+var Actions = require('../reflux/actions');
+var speciesStore = require('../reflux/speciesStore');
 
+const PokemonItem = React.createClass({
+  // mixins: [Reflux.listenTo(speciesStore, 'onChange')],
+  // getInitialState: function() {
+  //   return {
+  //     "species": []
+  //   };
+  // },
+  // onChange: function(event, species) {
+  //   this.setState({"species" : species});
+  //   console.log(this.state.species);
+  //   console.log(this.props.name);
+  // },
+  // componentWillMount: function() {
+  //   if (this.props.name){
+  //     Actions.getSpecies(this.props.name);
+  //   }
+  // },
 
   render () {
-    const {
-      id,
-      img,
-      name,
-      types,
-      height,
-      weight
-    } = this.props;
-
     var pokemonTypes = this.props.types.map((item) => {
       return <PokemonType key={item} type={item} />;
     });
@@ -39,12 +49,12 @@ const PokemonItem = React.createClass({
       padding: 5,
     };
 
-    if (this.props.id !== 0) {
+    if (this.props.index !== 0) {
       return (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" style={itemConatiner} >
-          <div className="panel panel-success" data-toggle="modal" data-target="#myModal">
+          <div className="panel panel-success" data-toggle="modal" data-target={"#" + this.props.name}>
             <div className="panel-heading" >
-              <ItemHeader id={this.props.id} name={this.props.name} img={this.props.img}/>
+              <ItemHeader index={this.props.index} ucName={this.props.ucName} img={this.props.img}/>
             </div>
             <div className="panel-body">
               <ItemImg img={this.props.img}/>
@@ -53,14 +63,16 @@ const PokemonItem = React.createClass({
           </div>
 
           <ItemDetail
-            id="myModal"
-            key={id}
-            id={id}
-            img={img}
-            name={name}
-            types={types}
-            height={height}
-            weight={weight}
+            id={this.props.name}
+            key={this.props.index}
+            index={this.props.index}
+            img={this.props.img}
+            name={this.props.name}
+            types={this.props.types}
+            height={this.props.height}
+            weight={this.props.weight}
+            ucName={this.props.ucName}
+            blurb={this.props.blurb}
           />
 
         </div>

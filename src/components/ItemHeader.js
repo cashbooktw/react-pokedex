@@ -12,8 +12,8 @@ var ItemHeader = React.createClass({
     return (
       <div className="middle-title">
         &nbsp;
-        <span style={indexStyle}>No.{this.props.id}</span>
-        <span style={nameStyle}>{this.props.name}</span>
+        <span style={indexStyle}>No.{this.props.index}</span>
+        <span style={nameStyle}>{this.props.ucName}</span>
       </div>
     );
   }

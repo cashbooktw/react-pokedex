@@ -22078,38 +22078,52 @@ module.exports = Pokedex;
 var React = require('react');
 var ItemHeader = require('./ItemHeader');
 var ItemImg = require('./ItemImg');
-var HTTP = require('../services/fetch');
+var Reflux = require('reflux');
+var Actions = require('../reflux/actions');
+var speciesStore = require('../reflux/speciesStore');
 var ItemDetail = React.createClass({
   displayName: 'ItemDetail',
 
-  // <button type="button" className="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  //   Launch demo modal
-  // </button>
-  // <div className="modal fade" tabIndex="-1" role="dialog" id="myModal">
-  //   <div className="modal-dialog">
-  //     <div className="modal-content">
-  //       <div className="modal-header">
-  //         <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  //         <h4 className="modal-title">Modal title</h4>
-  //       </div>
-  //       <div className="modal-body">
-  //         <p>One fine body&hellip;</p>
-  //       </div>
-  //       <div className="modal-footer">
-  //         <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-  //         <button type="button" className="btn btn-primary">Save changes</button>
-  //       </div>
-  //     </div>
-  //   </div>
-  // </div>
+  // mixins: [Reflux.listenTo(speciesStore, 'onChange')],
+  // getInitialState: function() {
+  //   return {
+  //     "species": ""
+  //   };
+  // },
+  // onChange: function(event, species) {
+  //   this.setState({"species" : species});
+  // },
+  // componentWillMount: function() {
+  //   Actions.getSpecies(this.props.ucName);
+  // },
   render: function () {
+
+    // style
     var closeBtnStyle = {
       marginLeft: 10
     };
-    var species = HTTP.get;
+
+    // blurb
+    // var pokemonBlurb = "";
+    // var blurb = (this.state.species.filter((item) => {
+    //   return (item.name === this.props.name);
+    // }));
+    // if(blurb[0]) {
+    //       pokemonBlurb = blurb[0].blurb;
+    // }
+    //
+    // var pokemonGenera = "";
+    // var genera = (this.state.species.filter((item) => {
+    //   return (item.name === this.props.name);
+    // }));
+    // console.log(genera);
+    // if(genera[0]) {
+    //       pokemonGenera = genera[0].genus;
+    // }
+
     return React.createElement(
       'div',
-      { className: 'modal fade', tabIndex: '-1', role: 'dialog', id: 'myModal' },
+      { className: 'modal fade', tabIndex: '-1', role: 'dialog', id: this.props.name },
       React.createElement(
         'div',
         { className: 'modal-dialog modal-lg' },
@@ -22131,13 +22145,33 @@ var ItemDetail = React.createClass({
             React.createElement(
               'h4',
               { className: 'modal-title' },
-              React.createElement(ItemHeader, { id: this.props.id, name: this.props.name })
+              React.createElement(ItemHeader, { index: this.props.index, ucName: this.props.ucName })
             )
           ),
           React.createElement(
             'div',
             { className: 'modal-body' },
-            React.createElement(ItemImg, { className: 'col-xs-3', img: this.props.img })
+            React.createElement(ItemImg, { className: 'col-xs-3', img: this.props.img }),
+            React.createElement(
+              'div',
+              null,
+              this.props.height
+            ),
+            React.createElement(
+              'div',
+              null,
+              this.props.weight
+            ),
+            React.createElement(
+              'div',
+              null,
+              this.props.ucName
+            ),
+            React.createElement(
+              'div',
+              null,
+              this.props.blurb
+            )
           )
         )
       )
@@ -22148,7 +22182,7 @@ var ItemDetail = React.createClass({
 
 module.exports = ItemDetail;
 
-},{"../services/fetch":203,"./ItemHeader":192,"./ItemImg":193,"react":170}],192:[function(require,module,exports){
+},{"../reflux/actions":201,"../reflux/speciesStore":203,"./ItemHeader":192,"./ItemImg":193,"react":170,"reflux":186}],192:[function(require,module,exports){
 var React = require('react');
 
 var ItemHeader = React.createClass({
@@ -22170,12 +22204,12 @@ var ItemHeader = React.createClass({
         "span",
         { style: indexStyle },
         "No.",
-        this.props.id
+        this.props.index
       ),
       React.createElement(
         "span",
         { style: nameStyle },
-        this.props.name
+        this.props.ucName
       )
     );
   }
@@ -22235,20 +22269,31 @@ var PokemonType = require('./PokemonType');
 var ItemDetail = require('./ItemDetail');
 var ItemHeader = require('./ItemHeader');
 var ItemImg = require('./ItemImg');
+var Reflux = require('reflux');
+var Actions = require('../reflux/actions');
+var speciesStore = require('../reflux/speciesStore');
+
 const PokemonItem = React.createClass({
   displayName: 'PokemonItem',
 
+  // mixins: [Reflux.listenTo(speciesStore, 'onChange')],
+  // getInitialState: function() {
+  //   return {
+  //     "species": []
+  //   };
+  // },
+  // onChange: function(event, species) {
+  //   this.setState({"species" : species});
+  //   console.log(this.state.species);
+  //   console.log(this.props.name);
+  // },
+  // componentWillMount: function() {
+  //   if (this.props.name){
+  //     Actions.getSpecies(this.props.name);
+  //   }
+  // },
 
   render() {
-    const {
-      id,
-      img,
-      name,
-      types,
-      height,
-      weight
-    } = this.props;
-
     var pokemonTypes = this.props.types.map(item => {
       return React.createElement(PokemonType, { key: item, type: item });
     });
@@ -22272,17 +22317,17 @@ const PokemonItem = React.createClass({
       padding: 5
     };
 
-    if (this.props.id !== 0) {
+    if (this.props.index !== 0) {
       return React.createElement(
         'div',
         { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12', style: itemConatiner },
         React.createElement(
           'div',
-          { className: 'panel panel-success', 'data-toggle': 'modal', 'data-target': '#myModal' },
+          { className: 'panel panel-success', 'data-toggle': 'modal', 'data-target': "#" + this.props.name },
           React.createElement(
             'div',
             { className: 'panel-heading' },
-            React.createElement(ItemHeader, { id: this.props.id, name: this.props.name, img: this.props.img })
+            React.createElement(ItemHeader, { index: this.props.index, ucName: this.props.ucName, img: this.props.img })
           ),
           React.createElement(
             'div',
@@ -22296,14 +22341,16 @@ const PokemonItem = React.createClass({
           )
         ),
         React.createElement(ItemDetail, {
-          id: 'myModal',
-          key: id,
-          id: id,
-          img: img,
-          name: name,
-          types: types,
-          height: height,
-          weight: weight
+          id: this.props.name,
+          key: this.props.index,
+          index: this.props.index,
+          img: this.props.img,
+          name: this.props.name,
+          types: this.props.types,
+          height: this.props.height,
+          weight: this.props.weight,
+          ucName: this.props.ucName,
+          blurb: this.props.blurb
         })
       );
     } else {
@@ -22323,36 +22370,53 @@ const PokemonItem = React.createClass({
 
 module.exports = PokemonItem;
 
-},{"./ItemDetail":191,"./ItemHeader":192,"./ItemImg":193,"./PokemonType":197,"react":170}],196:[function(require,module,exports){
+},{"../reflux/actions":201,"../reflux/speciesStore":203,"./ItemDetail":191,"./ItemHeader":192,"./ItemImg":193,"./PokemonType":197,"react":170,"reflux":186}],196:[function(require,module,exports){
 var React = require('react');
 var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
 var PokemonStore = require('../reflux/pokemonStore');
 var PokemonItem = require('./PokemonItem');
+var speciesStore = require('../reflux/speciesStore');
 
 const PokemonList = React.createClass({
   displayName: 'PokemonList',
 
-  mixins: [Reflux.listenTo(PokemonStore, 'onChange')],
+  mixins: [Reflux.listenTo(PokemonStore, 'onPokemonChange')
+  //  Reflux.listenTo(speciesStore, 'onChange')
+  ],
   getInitialState: function () {
     return {
       pokemons: [{
         key: 0,
         id: 0,
-        name: "name",
+        name: "",
         types: [],
         height: 0,
         weight: 0
       }]
+      // "species": []
     };
   },
   componentWillMount: function () {
     Actions.getPokemons();
+    console.log("this.state.name = " + this.state.name);
+    // if (this.state.name){
+    //   Actions.getSpecies(this.props.name);
+    // }
   },
-  onChange: function (event, pokemons) {
+  // componentDidMount: function() {
+  //   console.log("componentDidMount");
+  // },
+  onPokemonChange: function (event, pokemons) {
     // console.log(...this.state.pokemons);
     this.setState({ pokemons: pokemons });
   },
+  // onChange: function(event, species) {
+  //   this.setState({"species" : species});
+  //   console.log(this.state.species);
+  //   console.log(this.props.name);
+  // },
+
   render() {
     var pokeSort = function (method) {
       switch (method) {
@@ -22414,15 +22478,20 @@ const PokemonList = React.createClass({
     }.bind(this);
 
     var pokemonItems = this.state.pokemons.filter(isContainKeywords).map(item => {
-      item.name = item.name.substring(0, 1).toUpperCase() + item.name.substring(1, item.name.length);
+      var upperCaseName = item.name;
+      upperCaseName = item.name.substring(0, 1).toUpperCase() + item.name.substring(1, item.name.length);
+      // console.log("upperCaseName = " + upperCaseName);
+      // console.log("item.name = " + item.name);
       return React.createElement(PokemonItem, {
         key: item.id,
-        id: item.id,
+        index: item.id,
         img: item.img,
         name: item.name,
         types: item.types,
         height: item.height,
-        weight: item.weight
+        weight: item.weight,
+        ucName: upperCaseName,
+        blurb: item.blurb
       });
     });
 
@@ -22440,7 +22509,7 @@ const PokemonList = React.createClass({
 
 module.exports = PokemonList;
 
-},{"../reflux/actions":201,"../reflux/pokemonStore":202,"./PokemonItem":195,"react":170,"reflux":186}],197:[function(require,module,exports){
+},{"../reflux/actions":201,"../reflux/pokemonStore":202,"../reflux/speciesStore":203,"./PokemonItem":195,"react":170,"reflux":186}],197:[function(require,module,exports){
 var React = require('react');
 
 const PokemonType = React.createClass({
@@ -22625,7 +22694,7 @@ ReactDOM.render(React.createElement(App, null), document.getElementById('test'))
 },{"./components/App":190,"react":170,"react-dom":30}],201:[function(require,module,exports){
 var Reflux = require('reflux');
 
-var Actions = Reflux.createActions(["getPokemons"]);
+var Actions = Reflux.createActions(["getPokemons", "getSpecies"]);
 
 module.exports = Actions;
 
@@ -22635,41 +22704,158 @@ let Reflux = require('reflux');
 var Actions = require('./actions');
 
 let PokemonStore = Reflux.createStore({
+  // listenables: [Actions],
+  // getPokemons: function() {
+  //   this.pokemons = [];
+  //   var pokemonBaseUrl = "http://pokeapi.co/api/v2/pokemon";
+  //   var artworkBaseUrl = "http://img.pokemondb.net/artwork/";
+  //   var p1 = new Promise(function(resolve, reject) {
+  //     resolve();
+  //   });
+  //
+  //   for (let j = 1; j < 4; j++) {
+  //     p1.then(
+  //       function() {
+  //         HTTP.get(pokemonBaseUrl + "/" + j).then(function(json) {
+  //
+  //           var rObj = {};
+  //           rObj.id = json.id;
+  //           rObj.name = json.name;
+  //           rObj.img = artworkBaseUrl + json.name + ".jpg";
+  //           rObj.types = [];
+  //           for (var k of json.types) {
+  //             rObj.types.push(k.type.name);
+  //           }
+  //           rObj.height = json.height;
+  //           rObj.weight = json.weight
+  //
+  //           this.pokemons.push(rObj);
+  //           this.trigger('pokemonChange', this.pokemons);
+  //         }.bind(this));
+  //       }.bind(this)
+  //     );
+  //   }
+  // }
+
   listenables: [Actions],
   getPokemons: function () {
     this.pokemons = [];
+    this.species = [];
     var pokemonBaseUrl = "http://pokeapi.co/api/v2/pokemon";
     var artworkBaseUrl = "http://img.pokemondb.net/artwork/";
-    var p1 = new Promise(function (resolve, reject) {
-      resolve();
-    });
+    var speciesUrl = "http://pokeapi.co/api/v2/pokemon-species/";
+    // var p1 = new Promise(function(resolve, reject) {
+    //   resolve();
+    // });
 
-    for (let j = 1; j < 10; j++) {
-      p1.then(function () {
-        HTTP.get(pokemonBaseUrl + "/" + j).then(function (json) {
+    for (let j = 1; j < 4; j++) {
+      // p1.then(
+      // function() {
+      HTTP.get(pokemonBaseUrl + "/" + j).then(function (json) {
 
-          var rObj = {};
-          rObj.id = json.id;
-          rObj.name = json.name;
-          rObj.img = artworkBaseUrl + json.name + ".jpg";
-          rObj.types = [];
-          for (var k of json.types) {
-            rObj.types.push(k.type.name);
-          }
-          rObj.height = json.height;
-          rObj.weight = json.weight;
+        var rObj = {};
+        rObj.id = json.id;
+        rObj.name = json.name;
+        rObj.img = artworkBaseUrl + json.name + ".jpg";
+        rObj.types = [];
+        for (var k of json.types) {
+          rObj.types.push(k.type.name);
+        }
+        rObj.height = json.height;
+        rObj.weight = json.weight;
 
+        // this.pokemons.push(rObj);
+        // this.trigger('pokemonChange', this.pokemons);
+        return rObj;
+      }.bind(this)).then(function (rObj) {
+        this.species = HTTP.get(speciesUrl + rObj.name).then(function (json) {
+          var flavorTexts = json.flavor_text_entries.map(function (item) {
+            return item.language.name == "en" ? item.flavor_text : "";
+          });
+          var arrayBlurb = [];
+          for (var index in flavorTexts) {
+            if (!arrayBlurb.includes(flavorTexts[index])) {
+              arrayBlurb.push(flavorTexts[index]);
+            }
+          };
+          var blurb = arrayBlurb[0] + ' ' + arrayBlurb[1];
+          rObj.blurb = blurb;
           this.pokemons.push(rObj);
-          this.trigger('change', this.pokemons);
+          this.trigger('pokemonChange', this.pokemons);
+          //  this.species.push(rObj);
         }.bind(this));
       }.bind(this));
+      // }
+      // );
     }
   }
+
+  // getSpecies: function(name) {
+  //
+  //
+  //     var species = HTTP.get(speciesUrl + name).then(function(json) {
+  //     var rObj = {};
+  //
+  //     rObj.name = name.substring(0,1).toUpperCase() +
+  //                       name.substring(1,name.length);
+  //
+  //     var flavorTexts = json.flavor_text_entries.map(function(item) {
+  //       return item.language.name == "en" ? item.flavor_text : "";
+  //     });
+  //     var arrayBlurb = [];
+  //     for(var index in flavorTexts){
+  //       if(!arrayBlurb.includes(flavorTexts[index])){
+  //         arrayBlurb.push(flavorTexts[index]);
+  //       }
+  //     };
+  //     var blurb = arrayBlurb[0] + ' ' + arrayBlurb[1];
+  //     rObj.blurb = blurb;
+  //     this.species.push(rObj);
+  //   this.trigger('change', this.species);
+  // }.bind(this));
+  //
+  // }
+
 });
 
 module.exports = PokemonStore;
 
-},{"../services/fetch":203,"./actions":201,"reflux":186}],203:[function(require,module,exports){
+},{"../services/fetch":204,"./actions":201,"reflux":186}],203:[function(require,module,exports){
+let HTTP = require('../services/fetch');
+let Reflux = require('reflux');
+var Actions = require('./actions');
+
+let PokemonStore = Reflux.createStore({
+  listenables: [Actions],
+  getSpecies: function (name) {
+    this.species = [];
+    var speciesUrl = "http://pokeapi.co/api/v2/pokemon-species/";
+    var species = HTTP.get(speciesUrl + name).then(function (json) {
+      var rObj = {};
+
+      rObj.name = name.substring(0, 1).toUpperCase() + name.substring(1, name.length);
+
+      var flavorTexts = json.flavor_text_entries.map(function (item) {
+        return item.language.name == "en" ? item.flavor_text : "";
+      });
+      var arrayBlurb = [];
+      for (var index in flavorTexts) {
+        if (!arrayBlurb.includes(flavorTexts[index])) {
+          arrayBlurb.push(flavorTexts[index]);
+        }
+      };
+      var blurb = arrayBlurb[0] + ' ' + arrayBlurb[1];
+      rObj.blurb = blurb;
+      this.species.push(rObj);
+      this.trigger('change', this.species);
+    }.bind(this));
+  }
+
+});
+
+module.exports = PokemonStore;
+
+},{"../services/fetch":204,"./actions":201,"reflux":186}],204:[function(require,module,exports){
 let Fetch = require('whatwg-fetch');
 // let baseUrl = "http://pokeapi.co/api/v2/pokemon";
 
