@@ -8,9 +8,9 @@ let PokemonStore = Reflux.createStore({
   getPokemons: function() {
     this.pokemons = [];
     this.species = [];
-    var pokemonBaseUrl = "http://pokeapi.co/api/v2/pokemon";
-    var artworkBaseUrl = "http://img.pokemondb.net/artwork/";
-    var speciesUrl = "http://pokeapi.co/api/v2/pokemon-species/";
+    var pokemonBaseUrl = "https://pokeapi.co/api/v2/pokemon";
+    var artworkBaseUrl = "https://img.pokemondb.net/artwork/";
+    var speciesUrl = "https://pokeapi.co/api/v2/pokemon-species/";
 
     // j is the index of pokemon
     for (let j = 1; j < 50; j++) {
