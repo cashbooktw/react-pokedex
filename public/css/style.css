@@ -1,11 +1,14 @@
 /*Base*/
-
+body {
+  padding-bottom: 70px;
+}
 .middle-title {
   font-size: 20px;
 }
 .middle-content {
   font-size: 16px;
 }
+
 
 /*Layout*/
 .mHeader {

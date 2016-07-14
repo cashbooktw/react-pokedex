@@ -22045,6 +22045,7 @@ var PokemonList = require('./PokemonList');
 var SortDropdown = require('./SortDropdown');
 var SearchBar = require('./SearchBar');
 var PageHeader = require('./PageHeader');
+var Footer = require('./Footer');
 var Pokedex = React.createClass({
   displayName: 'Pokedex',
 
@@ -22058,7 +22059,7 @@ var Pokedex = React.createClass({
     return React.createElement(
       'div',
       null,
-      React.createElement(PageHeader, { title: 'Pokemon Index' }),
+      React.createElement(PageHeader, { title: 'Pokémon Index' }),
       React.createElement(SortDropdown, { onChangeMethod: method => this.setState({
           "sortMethod": method
         })
@@ -22067,14 +22068,55 @@ var Pokedex = React.createClass({
           "filterCondition": filterCondition
         })
       }),
-      React.createElement(PokemonList, { sortMethod: this.state.sortMethod, filterCondition: this.state.filterCondition })
+      React.createElement(PokemonList, { sortMethod: this.state.sortMethod, filterCondition: this.state.filterCondition }),
+      React.createElement(Footer, null)
     );
   }
 });
 
 module.exports = Pokedex;
 
-},{"../reflux/actions":201,"../reflux/pokemonStore":202,"./PageHeader":194,"./PokemonList":196,"./SearchBar":198,"./SortDropdown":199,"react":170,"reflux":186}],191:[function(require,module,exports){
+},{"../reflux/actions":202,"../reflux/pokemonStore":203,"./Footer":191,"./PageHeader":195,"./PokemonList":197,"./SearchBar":199,"./SortDropdown":200,"react":170,"reflux":186}],191:[function(require,module,exports){
+var React = require('react');
+
+var Footer = React.createClass({
+  displayName: "Footer",
+
+
+  render: function () {
+
+    // style
+    var footerText = {
+      float: "right",
+      paddingTop: 15
+    };
+
+    return React.createElement(
+      "div",
+      { className: "navbar navbar-default navbar-fixed-bottom" },
+      React.createElement(
+        "div",
+        { className: "container" },
+        React.createElement(
+          "p",
+          { style: footerText },
+          "Made by ",
+          React.createElement(
+            "a",
+            { href: "https://github.com/cashbooktw" },
+            "cashbook"
+          ),
+          " © 2016"
+        )
+      )
+    );
+  }
+
+});
+
+module.exports = Footer;
+
+},{"react":170}],192:[function(require,module,exports){
 var React = require('react');
 var ItemHeader = require('./ItemHeader');
 var ItemImg = require('./ItemImg');
@@ -22282,7 +22324,7 @@ var ItemDetail = React.createClass({
 
 module.exports = ItemDetail;
 
-},{"../reflux/actions":201,"../reflux/speciesStore":203,"./ItemHeader":192,"./ItemImg":193,"react":170,"reflux":186}],192:[function(require,module,exports){
+},{"../reflux/actions":202,"../reflux/speciesStore":204,"./ItemHeader":193,"./ItemImg":194,"react":170,"reflux":186}],193:[function(require,module,exports){
 var React = require('react');
 
 var ItemHeader = React.createClass({
@@ -22320,7 +22362,7 @@ var ItemHeader = React.createClass({
 
 module.exports = ItemHeader;
 
-},{"react":170}],193:[function(require,module,exports){
+},{"react":170}],194:[function(require,module,exports){
 var React = require('react');
 
 var ItemImg = React.createClass({
@@ -22344,7 +22386,7 @@ var ItemImg = React.createClass({
 
 module.exports = ItemImg;
 
-},{"react":170}],194:[function(require,module,exports){
+},{"react":170}],195:[function(require,module,exports){
 var React = require('react');
 var PropTypes = React.PropTypes;
 
@@ -22368,7 +22410,7 @@ var PageHeader = React.createClass({
 
 module.exports = PageHeader;
 
-},{"react":170}],195:[function(require,module,exports){
+},{"react":170}],196:[function(require,module,exports){
 var React = require('react');
 var PokemonType = require('./PokemonType');
 var ItemDetail = require('./ItemDetail');
@@ -22456,7 +22498,7 @@ const PokemonItem = React.createClass({
 
 module.exports = PokemonItem;
 
-},{"../reflux/actions":201,"../reflux/speciesStore":203,"./ItemDetail":191,"./ItemHeader":192,"./ItemImg":193,"./PokemonType":197,"react":170,"reflux":186}],196:[function(require,module,exports){
+},{"../reflux/actions":202,"../reflux/speciesStore":204,"./ItemDetail":192,"./ItemHeader":193,"./ItemImg":194,"./PokemonType":198,"react":170,"reflux":186}],197:[function(require,module,exports){
 var React = require('react');
 var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
@@ -22566,7 +22608,7 @@ const PokemonList = React.createClass({
 
 module.exports = PokemonList;
 
-},{"../reflux/actions":201,"../reflux/pokemonStore":202,"../reflux/speciesStore":203,"./PokemonItem":195,"react":170,"reflux":186}],197:[function(require,module,exports){
+},{"../reflux/actions":202,"../reflux/pokemonStore":203,"../reflux/speciesStore":204,"./PokemonItem":196,"react":170,"reflux":186}],198:[function(require,module,exports){
 var React = require('react');
 
 const PokemonType = React.createClass({
@@ -22612,7 +22654,7 @@ const PokemonType = React.createClass({
 });
 module.exports = PokemonType;
 
-},{"react":170}],198:[function(require,module,exports){
+},{"react":170}],199:[function(require,module,exports){
 var React = require('react');
 
 var SearchBar = React.createClass({
@@ -22654,7 +22696,7 @@ var SearchBar = React.createClass({
 
 module.exports = SearchBar;
 
-},{"react":170}],199:[function(require,module,exports){
+},{"react":170}],200:[function(require,module,exports){
 var React = require('react');
 
 var SortDropdown = React.createClass({
@@ -22743,21 +22785,21 @@ var SortDropdown = React.createClass({
 
 module.exports = SortDropdown;
 
-},{"react":170}],200:[function(require,module,exports){
+},{"react":170}],201:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var App = require('./components/App');
 
 ReactDOM.render(React.createElement(App, null), document.getElementById('test'));
 
-},{"./components/App":190,"react":170,"react-dom":30}],201:[function(require,module,exports){
+},{"./components/App":190,"react":170,"react-dom":30}],202:[function(require,module,exports){
 var Reflux = require('reflux');
 
 var Actions = Reflux.createActions(["getPokemons"]);
 
 module.exports = Actions;
 
-},{"reflux":186}],202:[function(require,module,exports){
+},{"reflux":186}],203:[function(require,module,exports){
 let HTTP = require('../services/fetch');
 let Reflux = require('reflux');
 var Actions = require('./actions');
@@ -22773,7 +22815,7 @@ let PokemonStore = Reflux.createStore({
     var speciesUrl = "http://pokeapi.co/api/v2/pokemon-species/";
 
     // j is the index of pokemon
-    for (let j = 1; j < 4; j++) {
+    for (let j = 1; j < 151; j++) {
       // use index to get basic information, includes name
       HTTP.get(pokemonBaseUrl + "/" + j).then(function (json) {
 
@@ -22828,7 +22870,7 @@ let PokemonStore = Reflux.createStore({
 
 module.exports = PokemonStore;
 
-},{"../services/fetch":204,"./actions":201,"reflux":186}],203:[function(require,module,exports){
+},{"../services/fetch":205,"./actions":202,"reflux":186}],204:[function(require,module,exports){
 let HTTP = require('../services/fetch');
 let Reflux = require('reflux');
 var Actions = require('./actions');
@@ -22863,7 +22905,7 @@ let PokemonStore = Reflux.createStore({
 
 module.exports = PokemonStore;
 
-},{"../services/fetch":204,"./actions":201,"reflux":186}],204:[function(require,module,exports){
+},{"../services/fetch":205,"./actions":202,"reflux":186}],205:[function(require,module,exports){
 let Fetch = require('whatwg-fetch');
 
 let httpservice = {
@@ -22876,4 +22918,4 @@ let httpservice = {
 
 module.exports = httpservice;
 
-},{"whatwg-fetch":189}]},{},[200]);
+},{"whatwg-fetch":189}]},{},[201]);

@@ -6,6 +6,7 @@ var PokemonList = require('./PokemonList');
 var SortDropdown = require('./SortDropdown');
 var SearchBar = require('./SearchBar');
 var PageHeader = require('./PageHeader');
+var Footer = require('./Footer');
 var Pokedex = React.createClass({
   getInitialState: function() {
     return {
@@ -17,7 +18,7 @@ var Pokedex = React.createClass({
     return (
       <div>
         {/*page header */}
-        <PageHeader title="Pokemon Index"></PageHeader>
+        <PageHeader title="Pokémon Index"></PageHeader>
 
         {/* sort button */}
         <SortDropdown onChangeMethod={
@@ -35,6 +36,8 @@ var Pokedex = React.createClass({
         />
         {/* main content */}
         <PokemonList sortMethod={this.state.sortMethod} filterCondition={this.state.filterCondition}/>
+
+        <Footer />
       </div>
     );
   }
