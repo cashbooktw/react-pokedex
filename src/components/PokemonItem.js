@@ -8,28 +8,8 @@ var Actions = require('../reflux/actions');
 var speciesStore = require('../reflux/speciesStore');
 
 const PokemonItem = React.createClass({
-  // mixins: [Reflux.listenTo(speciesStore, 'onChange')],
-  // getInitialState: function() {
-  //   return {
-  //     "species": []
-  //   };
-  // },
-  // onChange: function(event, species) {
-  //   this.setState({"species" : species});
-  //   console.log(this.state.species);
-  //   console.log(this.props.name);
-  // },
-  // componentWillMount: function() {
-  //   if (this.props.name){
-  //     Actions.getSpecies(this.props.name);
-  //   }
-  // },
-
   render () {
-    var pokemonTypes = this.props.types.map((item) => {
-      return <PokemonType key={item} type={item} />;
-    });
-
+    // style
     var imgStyle = {
       background: 'white url("' + this.props.img + '") no-repeat center center',
       backgroundSize: "contain",
@@ -37,18 +17,22 @@ const PokemonItem = React.createClass({
       border: '2px solid #ccc',
       height: 200,
     };
-
     var indexStyle = {
       float: "left"
     };
     var nameStyle = {
       float: "right"
     };
-
     var itemConatiner = {
       padding: 5,
     };
 
+    // take types from type array
+    var pokemonTypes = this.props.types.map((item) => {
+      return <PokemonType key={item} type={item} />;
+    });
+
+    // let react don't render with initial value
     if (this.props.index !== 0) {
       return (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" style={itemConatiner} >
@@ -73,6 +57,12 @@ const PokemonItem = React.createClass({
             weight={this.props.weight}
             ucName={this.props.ucName}
             blurb={this.props.blurb}
+            category={this.props.category}
+            color={this.props.color}
+            shape={this.props.shape}
+            habitat={this.props.habitat}
+            growthRate={this.props.growthRate}
+            captureRate={this.props.captureRate}
           />
 
         </div>
@@ -80,15 +70,6 @@ const PokemonItem = React.createClass({
     } else {
       return <div></div>;
     }
-    {/*return (
-      <div className="panel panel-default col-lg-3 col-md-4 col-sm-6 col-xs-12">
-        <div className="panel-heading"><span className="badge">{this.props.id}</span>{this.props.name}</div>
-        <div className="panel-body">
-          <div style={imgStyle}></div>
-          <div>{pokemonTypes}</div>
-        </div>
-      </div>
-    )*/}
   }
 })
 

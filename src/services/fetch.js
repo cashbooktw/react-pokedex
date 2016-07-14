@@ -1,5 +1,5 @@
 let Fetch = require('whatwg-fetch');
-// let baseUrl = "http://pokeapi.co/api/v2/pokemon";
+
 
 let httpservice  = {
   get: function(url) {

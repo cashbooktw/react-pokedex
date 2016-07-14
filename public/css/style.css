@@ -3,29 +3,37 @@
 .middle-title {
   font-size: 20px;
 }
+.middle-content {
+  font-size: 16px;
+}
 
 /*Layout*/
-
 .mHeader {
   background-color: #82DD78;
 }
 
+
+
+/*Module*/
 .sortdropdown {
   position: absolute;
   top: 10px;
 }
-
 .searchbar {
   position: absolute;
   top: 10px;
 }
-
-/*.mainContent {
-  margin-top: 20px;
-}*/
-/*Module*/
-.panel-heading {
-  background-color: #82DD78;
+.modal-header-success {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #82DD78;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
 }
 
 /*State*/

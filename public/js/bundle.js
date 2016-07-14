@@ -22084,93 +22084,193 @@ var speciesStore = require('../reflux/speciesStore');
 var ItemDetail = React.createClass({
   displayName: 'ItemDetail',
 
-  // mixins: [Reflux.listenTo(speciesStore, 'onChange')],
-  // getInitialState: function() {
-  //   return {
-  //     "species": ""
-  //   };
-  // },
-  // onChange: function(event, species) {
-  //   this.setState({"species" : species});
-  // },
-  // componentWillMount: function() {
-  //   Actions.getSpecies(this.props.ucName);
-  // },
   render: function () {
 
     // style
+    // make btn stay away from pokemon name
     var closeBtnStyle = {
       marginLeft: 10
     };
 
-    // blurb
-    // var pokemonBlurb = "";
-    // var blurb = (this.state.species.filter((item) => {
-    //   return (item.name === this.props.name);
-    // }));
-    // if(blurb[0]) {
-    //       pokemonBlurb = blurb[0].blurb;
-    // }
-    //
-    // var pokemonGenera = "";
-    // var genera = (this.state.species.filter((item) => {
-    //   return (item.name === this.props.name);
-    // }));
-    // console.log(genera);
-    // if(genera[0]) {
-    //       pokemonGenera = genera[0].genus;
-    // }
-
-    return React.createElement(
-      'div',
-      { className: 'modal fade', tabIndex: '-1', role: 'dialog', id: this.props.name },
+    return(
+      // the dialog id is passed by pokemon item, and bind with it
       React.createElement(
         'div',
-        { className: 'modal-dialog modal-lg' },
+        { className: 'modal fade', tabIndex: '-1', role: 'dialog', id: this.props.name },
         React.createElement(
           'div',
-          { className: 'modal-content' },
+          { className: 'modal-dialog modal-lg' },
           React.createElement(
             'div',
-            { className: 'modal-header' },
+            { className: 'modal-content' },
             React.createElement(
-              'button',
-              { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close', style: closeBtnStyle },
+              'div',
+              { className: 'modal-header modal-header-success' },
               React.createElement(
-                'span',
-                { 'aria-hidden': 'true' },
-                '×'
+                'button',
+                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close', style: closeBtnStyle },
+                React.createElement(
+                  'span',
+                  { 'aria-hidden': 'true' },
+                  '×'
+                )
+              ),
+              React.createElement(
+                'h4',
+                { className: 'modal-title' },
+                React.createElement(ItemHeader, { index: this.props.index, ucName: this.props.ucName })
               )
             ),
             React.createElement(
-              'h4',
-              { className: 'modal-title' },
-              React.createElement(ItemHeader, { index: this.props.index, ucName: this.props.ucName })
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: 'modal-body' },
-            React.createElement(ItemImg, { className: 'col-xs-3', img: this.props.img }),
-            React.createElement(
               'div',
-              null,
-              this.props.height
-            ),
-            React.createElement(
-              'div',
-              null,
-              this.props.weight
-            ),
-            React.createElement(
-              'div',
-              null,
-              this.props.ucName
-            ),
-            React.createElement(
-              'div',
-              null,
-              this.props.blurb
+              { className: 'modal-body middle-content' },
+              React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                  'div',
+                  { className: 'col-md-6 col-xs-12' },
+                  React.createElement(ItemImg, { img: this.props.img })
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'col-md-6 col-xs-12' },
+                  React.createElement(
+                    'table',
+                    { className: 'table table-striped' },
+                    React.createElement(
+                      'tbody',
+                      null,
+                      React.createElement(
+                        'tr',
+                        null,
+                        React.createElement(
+                          'td',
+                          null,
+                          'Height:'
+                        ),
+                        React.createElement(
+                          'td',
+                          null,
+                          this.props.height
+                        )
+                      ),
+                      React.createElement(
+                        'tr',
+                        null,
+                        React.createElement(
+                          'td',
+                          null,
+                          'Weight:'
+                        ),
+                        React.createElement(
+                          'td',
+                          null,
+                          this.props.weight
+                        )
+                      ),
+                      React.createElement(
+                        'tr',
+                        null,
+                        React.createElement(
+                          'td',
+                          null,
+                          'Category:'
+                        ),
+                        React.createElement(
+                          'td',
+                          null,
+                          this.props.category
+                        )
+                      ),
+                      React.createElement(
+                        'tr',
+                        null,
+                        React.createElement(
+                          'td',
+                          null,
+                          'Color:'
+                        ),
+                        React.createElement(
+                          'td',
+                          null,
+                          this.props.color
+                        )
+                      ),
+                      React.createElement(
+                        'tr',
+                        null,
+                        React.createElement(
+                          'td',
+                          null,
+                          'Shape:'
+                        ),
+                        React.createElement(
+                          'td',
+                          null,
+                          this.props.shape
+                        )
+                      ),
+                      React.createElement(
+                        'tr',
+                        null,
+                        React.createElement(
+                          'td',
+                          null,
+                          'Habitat:'
+                        ),
+                        React.createElement(
+                          'td',
+                          null,
+                          this.props.habitat
+                        )
+                      ),
+                      React.createElement(
+                        'tr',
+                        null,
+                        React.createElement(
+                          'td',
+                          null,
+                          'Growth Rate:'
+                        ),
+                        React.createElement(
+                          'td',
+                          null,
+                          this.props.growthRate
+                        )
+                      ),
+                      React.createElement(
+                        'tr',
+                        null,
+                        React.createElement(
+                          'td',
+                          null,
+                          'Capture Rate:'
+                        ),
+                        React.createElement(
+                          'td',
+                          null,
+                          this.props.captureRate
+                        )
+                      )
+                    )
+                  )
+                )
+              ),
+              React.createElement(
+                'div',
+                { className: 'row panel panel-success' },
+                React.createElement(
+                  'div',
+                  { className: 'panel-heading col-xs-12' },
+                  'Description: '
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'panel-body col-xs-12' },
+                  this.props.blurb
+                )
+              )
             )
           )
         )
@@ -22190,12 +22290,14 @@ var ItemHeader = React.createClass({
 
 
   render: function () {
+    // style
     var indexStyle = {
       float: "left"
     };
     var nameStyle = {
       float: "right"
     };
+
     return React.createElement(
       "div",
       { className: "middle-title" },
@@ -22225,6 +22327,8 @@ var ItemImg = React.createClass({
   displayName: 'ItemImg',
 
   render: function () {
+    // style
+    // use background image to resize the img
     var imgStyle = {
       background: 'white url("' + this.props.img + '") no-repeat center center',
       backgroundSize: "contain",
@@ -22232,6 +22336,7 @@ var ItemImg = React.createClass({
       border: '2px solid #ccc',
       height: 200
     };
+
     return React.createElement('div', { style: imgStyle });
   }
 
@@ -22276,28 +22381,8 @@ var speciesStore = require('../reflux/speciesStore');
 const PokemonItem = React.createClass({
   displayName: 'PokemonItem',
 
-  // mixins: [Reflux.listenTo(speciesStore, 'onChange')],
-  // getInitialState: function() {
-  //   return {
-  //     "species": []
-  //   };
-  // },
-  // onChange: function(event, species) {
-  //   this.setState({"species" : species});
-  //   console.log(this.state.species);
-  //   console.log(this.props.name);
-  // },
-  // componentWillMount: function() {
-  //   if (this.props.name){
-  //     Actions.getSpecies(this.props.name);
-  //   }
-  // },
-
   render() {
-    var pokemonTypes = this.props.types.map(item => {
-      return React.createElement(PokemonType, { key: item, type: item });
-    });
-
+    // style
     var imgStyle = {
       background: 'white url("' + this.props.img + '") no-repeat center center',
       backgroundSize: "contain",
@@ -22305,18 +22390,22 @@ const PokemonItem = React.createClass({
       border: '2px solid #ccc',
       height: 200
     };
-
     var indexStyle = {
       float: "left"
     };
     var nameStyle = {
       float: "right"
     };
-
     var itemConatiner = {
       padding: 5
     };
 
+    // take types from type array
+    var pokemonTypes = this.props.types.map(item => {
+      return React.createElement(PokemonType, { key: item, type: item });
+    });
+
+    // let react don't render with initial value
     if (this.props.index !== 0) {
       return React.createElement(
         'div',
@@ -22350,21 +22439,18 @@ const PokemonItem = React.createClass({
           height: this.props.height,
           weight: this.props.weight,
           ucName: this.props.ucName,
-          blurb: this.props.blurb
+          blurb: this.props.blurb,
+          category: this.props.category,
+          color: this.props.color,
+          shape: this.props.shape,
+          habitat: this.props.habitat,
+          growthRate: this.props.growthRate,
+          captureRate: this.props.captureRate
         })
       );
     } else {
       return React.createElement('div', null);
     }
-    {/*return (
-       <div className="panel panel-default col-lg-3 col-md-4 col-sm-6 col-xs-12">
-         <div className="panel-heading"><span className="badge">{this.props.id}</span>{this.props.name}</div>
-         <div className="panel-body">
-           <div style={imgStyle}></div>
-           <div>{pokemonTypes}</div>
-         </div>
-       </div>
-      )*/}
   }
 });
 
@@ -22381,9 +22467,7 @@ var speciesStore = require('../reflux/speciesStore');
 const PokemonList = React.createClass({
   displayName: 'PokemonList',
 
-  mixins: [Reflux.listenTo(PokemonStore, 'onPokemonChange')
-  //  Reflux.listenTo(speciesStore, 'onChange')
-  ],
+  mixins: [Reflux.listenTo(PokemonStore, 'onPokemonChange')],
   getInitialState: function () {
     return {
       pokemons: [{
@@ -22394,30 +22478,18 @@ const PokemonList = React.createClass({
         height: 0,
         weight: 0
       }]
-      // "species": []
     };
   },
   componentWillMount: function () {
     Actions.getPokemons();
-    console.log("this.state.name = " + this.state.name);
-    // if (this.state.name){
-    //   Actions.getSpecies(this.props.name);
-    // }
   },
-  // componentDidMount: function() {
-  //   console.log("componentDidMount");
-  // },
   onPokemonChange: function (event, pokemons) {
-    // console.log(...this.state.pokemons);
     this.setState({ pokemons: pokemons });
   },
-  // onChange: function(event, species) {
-  //   this.setState({"species" : species});
-  //   console.log(this.state.species);
-  //   console.log(this.props.name);
-  // },
 
   render() {
+
+    // rearrange content by sorting with select method and input keywords
     var pokeSort = function (method) {
       switch (method) {
         case "sortByID":
@@ -22451,37 +22523,16 @@ const PokemonList = React.createClass({
 
     pokeSort(this.props.sortMethod);
 
-    // var pokeFilter = function(filterCondition) {
-    //   if (filterCondition.trim() !== "") {
-    //
-    //   }
-    // }
-    //
-    // pokeSort(this.props.filterCondition);
-
-    // var pokemonItems = this.state.pokemons.map((item) => {
-    //   return (
-    //     <PokemonItem
-    //       key={item.id}
-    //       id={item.id}
-    //       img={item.img}
-    //       name={item.name}
-    //       types={item.types}
-    //       /* height={item.height}
-    //       weight={item.weight} */
-    //     />
-    //   )
-    // });
     var isContainKeywords = function (item) {
       var regexp = new RegExp(this.props.filterCondition, "i");
       return regexp.test(item.id) || regexp.test(item.name);
     }.bind(this);
 
     var pokemonItems = this.state.pokemons.filter(isContainKeywords).map(item => {
+      // turn first char into uppercase
       var upperCaseName = item.name;
       upperCaseName = item.name.substring(0, 1).toUpperCase() + item.name.substring(1, item.name.length);
-      // console.log("upperCaseName = " + upperCaseName);
-      // console.log("item.name = " + item.name);
+
       return React.createElement(PokemonItem, {
         key: item.id,
         index: item.id,
@@ -22491,7 +22542,13 @@ const PokemonList = React.createClass({
         height: item.height,
         weight: item.weight,
         ucName: upperCaseName,
-        blurb: item.blurb
+        blurb: item.blurb,
+        category: item.category,
+        color: item.color,
+        shape: item.shape,
+        habitat: item.habitat,
+        growthRate: item.growthRate,
+        captureRate: item.captureRate
       });
     });
 
@@ -22517,6 +22574,7 @@ const PokemonType = React.createClass({
 
 
   render() {
+    // style
     var typeColor = {
       "normal": "#DDA078",
       "fire": "#BF2F3E",
@@ -22544,6 +22602,7 @@ const PokemonType = React.createClass({
       marginTop: 5,
       float: "right"
     };
+
     return React.createElement(
       "div",
       { className: "label label-default", style: pokemonTypeStyle },
@@ -22694,7 +22753,7 @@ ReactDOM.render(React.createElement(App, null), document.getElementById('test'))
 },{"./components/App":190,"react":170,"react-dom":30}],201:[function(require,module,exports){
 var Reflux = require('reflux');
 
-var Actions = Reflux.createActions(["getPokemons", "getSpecies"]);
+var Actions = Reflux.createActions(["getPokemons"]);
 
 module.exports = Actions;
 
@@ -22704,38 +22763,6 @@ let Reflux = require('reflux');
 var Actions = require('./actions');
 
 let PokemonStore = Reflux.createStore({
-  // listenables: [Actions],
-  // getPokemons: function() {
-  //   this.pokemons = [];
-  //   var pokemonBaseUrl = "http://pokeapi.co/api/v2/pokemon";
-  //   var artworkBaseUrl = "http://img.pokemondb.net/artwork/";
-  //   var p1 = new Promise(function(resolve, reject) {
-  //     resolve();
-  //   });
-  //
-  //   for (let j = 1; j < 4; j++) {
-  //     p1.then(
-  //       function() {
-  //         HTTP.get(pokemonBaseUrl + "/" + j).then(function(json) {
-  //
-  //           var rObj = {};
-  //           rObj.id = json.id;
-  //           rObj.name = json.name;
-  //           rObj.img = artworkBaseUrl + json.name + ".jpg";
-  //           rObj.types = [];
-  //           for (var k of json.types) {
-  //             rObj.types.push(k.type.name);
-  //           }
-  //           rObj.height = json.height;
-  //           rObj.weight = json.weight
-  //
-  //           this.pokemons.push(rObj);
-  //           this.trigger('pokemonChange', this.pokemons);
-  //         }.bind(this));
-  //       }.bind(this)
-  //     );
-  //   }
-  // }
 
   listenables: [Actions],
   getPokemons: function () {
@@ -22744,13 +22771,10 @@ let PokemonStore = Reflux.createStore({
     var pokemonBaseUrl = "http://pokeapi.co/api/v2/pokemon";
     var artworkBaseUrl = "http://img.pokemondb.net/artwork/";
     var speciesUrl = "http://pokeapi.co/api/v2/pokemon-species/";
-    // var p1 = new Promise(function(resolve, reject) {
-    //   resolve();
-    // });
 
+    // j is the index of pokemon
     for (let j = 1; j < 4; j++) {
-      // p1.then(
-      // function() {
+      // use index to get basic information, includes name
       HTTP.get(pokemonBaseUrl + "/" + j).then(function (json) {
 
         var rObj = {};
@@ -22764,11 +22788,11 @@ let PokemonStore = Reflux.createStore({
         rObj.height = json.height;
         rObj.weight = json.weight;
 
-        // this.pokemons.push(rObj);
-        // this.trigger('pokemonChange', this.pokemons);
         return rObj;
       }.bind(this)).then(function (rObj) {
+        // use name to get more detail information
         this.species = HTTP.get(speciesUrl + rObj.name).then(function (json) {
+          // take the description from array
           var flavorTexts = json.flavor_text_entries.map(function (item) {
             return item.language.name == "en" ? item.flavor_text : "";
           });
@@ -22780,41 +22804,25 @@ let PokemonStore = Reflux.createStore({
           };
           var blurb = arrayBlurb[0] + ' ' + arrayBlurb[1];
           rObj.blurb = blurb;
+
+          // return "N/A" if there is no value
+          var isIt = function (thing) {
+            return thing ? thing.name : "N/A";
+          };
+
+          rObj.category = json.genera[0].genus;
+          rObj.color = isIt(json.color);
+          rObj.shape = isIt(json.shape);
+          rObj.habitat = isIt(json.habitat);
+          rObj.growthRate = isIt(json.growth_rate);
+          rObj.captureRate = json.capture_rate;
+
           this.pokemons.push(rObj);
           this.trigger('pokemonChange', this.pokemons);
-          //  this.species.push(rObj);
         }.bind(this));
       }.bind(this));
-      // }
-      // );
     }
   }
-
-  // getSpecies: function(name) {
-  //
-  //
-  //     var species = HTTP.get(speciesUrl + name).then(function(json) {
-  //     var rObj = {};
-  //
-  //     rObj.name = name.substring(0,1).toUpperCase() +
-  //                       name.substring(1,name.length);
-  //
-  //     var flavorTexts = json.flavor_text_entries.map(function(item) {
-  //       return item.language.name == "en" ? item.flavor_text : "";
-  //     });
-  //     var arrayBlurb = [];
-  //     for(var index in flavorTexts){
-  //       if(!arrayBlurb.includes(flavorTexts[index])){
-  //         arrayBlurb.push(flavorTexts[index]);
-  //       }
-  //     };
-  //     var blurb = arrayBlurb[0] + ' ' + arrayBlurb[1];
-  //     rObj.blurb = blurb;
-  //     this.species.push(rObj);
-  //   this.trigger('change', this.species);
-  // }.bind(this));
-  //
-  // }
 
 });
 
@@ -22857,7 +22865,6 @@ module.exports = PokemonStore;
 
 },{"../services/fetch":204,"./actions":201,"reflux":186}],204:[function(require,module,exports){
 let Fetch = require('whatwg-fetch');
-// let baseUrl = "http://pokeapi.co/api/v2/pokemon";
 
 let httpservice = {
   get: function (url) {

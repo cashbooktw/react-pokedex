@@ -3,6 +3,7 @@ var React = require('react');
 const PokemonType = React.createClass({
 
   render () {
+    // style
     var typeColor = {
       "normal": "#DDA078",
       "fire": "#BF2F3E",
@@ -30,6 +31,7 @@ const PokemonType = React.createClass({
       marginTop: 5,
       float: "right"
     };
+    
     return (
       <div className="label label-default" style={pokemonTypeStyle}>{this.props.type}</div>
     )

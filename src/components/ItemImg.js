@@ -3,6 +3,8 @@ var React = require('react');
 
 var ItemImg = React.createClass({
   render: function() {
+    // style
+    // use background image to resize the img
     var imgStyle = {
       background: 'white url("' + this.props.img + '") no-repeat center center',
       backgroundSize: "contain",
@@ -10,6 +12,7 @@ var ItemImg = React.createClass({
       border: '2px solid #ccc',
       height: 200,
     };
+
     return (
       <div style={imgStyle}>
 

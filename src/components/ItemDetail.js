@@ -5,63 +5,47 @@ var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
 var speciesStore = require('../reflux/speciesStore');
 var ItemDetail = React.createClass({
-  // mixins: [Reflux.listenTo(speciesStore, 'onChange')],
-  // getInitialState: function() {
-  //   return {
-  //     "species": ""
-  //   };
-  // },
-  // onChange: function(event, species) {
-  //   this.setState({"species" : species});
-  // },
-  // componentWillMount: function() {
-  //   Actions.getSpecies(this.props.ucName);
-  // },
   render: function() {
 
     // style
+    // make btn stay away from pokemon name
     var closeBtnStyle = {
       marginLeft: 10
     };
 
-    // blurb
-    // var pokemonBlurb = "";
-    // var blurb = (this.state.species.filter((item) => {
-    //   return (item.name === this.props.name);
-    // }));
-    // if(blurb[0]) {
-    //       pokemonBlurb = blurb[0].blurb;
-    // }
-    //
-    // var pokemonGenera = "";
-    // var genera = (this.state.species.filter((item) => {
-    //   return (item.name === this.props.name);
-    // }));
-    // console.log(genera);
-    // if(genera[0]) {
-    //       pokemonGenera = genera[0].genus;
-    // }
-
-
-
     return (
+      // the dialog id is passed by pokemon item, and bind with it
       <div className="modal fade" tabIndex="-1" role="dialog" id={this.props.name}>
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="modal-header modal-header-success">
               <button type="button" className="close" data-dismiss="modal" aria-label="Close" style={closeBtnStyle}><span aria-hidden="true">&times;</span></button>
               <h4 className="modal-title">
                 <ItemHeader index={this.props.index} ucName={this.props.ucName} />
               </h4>
             </div>
-            <div className="modal-body">
-              <ItemImg className="col-xs-3" img={this.props.img}/>
-              <div>{this.props.height}</div>
-              <div>{this.props.weight}</div>
-              <div>{this.props.ucName}</div>
-              <div>{this.props.blurb}</div>
-              {/*<div>{pokemonGenera}</div>
-              <div>{pokemonBlurb}</div>*/}
+            <div className="modal-body middle-content">
+              <div className="row">
+                <div className="col-md-6 col-xs-12"><ItemImg img={this.props.img}/></div>
+                <div className="col-md-6 col-xs-12">
+                  <table className="table table-striped">
+                    <tbody>
+                    <tr><td>Height:</td><td>{this.props.height}</td></tr>
+                    <tr><td>Weight:</td><td>{this.props.weight}</td></tr>
+                    <tr><td>Category:</td><td>{this.props.category}</td></tr>
+                    <tr><td>Color:</td><td>{this.props.color}</td></tr>
+                    <tr><td>Shape:</td><td>{this.props.shape}</td></tr>
+                    <tr><td>Habitat:</td><td>{this.props.habitat}</td></tr>
+                    <tr><td>Growth Rate:</td><td>{this.props.growthRate}</td></tr>
+                    <tr><td>Capture Rate:</td><td>{this.props.captureRate}</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="row panel panel-success">
+                <div className="panel-heading col-xs-12">Description: </div>
+                <div className="panel-body col-xs-12">{this.props.blurb}</div>
+              </div>
             </div>
           </div>
         </div>

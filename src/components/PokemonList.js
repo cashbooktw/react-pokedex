@@ -6,9 +6,7 @@ var PokemonItem = require('./PokemonItem');
 var speciesStore = require('../reflux/speciesStore');
 
 const PokemonList = React.createClass({
-  mixins: [Reflux.listenTo(PokemonStore, 'onPokemonChange')
-          //  Reflux.listenTo(speciesStore, 'onChange')
-  ],
+  mixins: [Reflux.listenTo(PokemonStore, 'onPokemonChange')],
   getInitialState: function() {
     return {
       pokemons: [{
@@ -19,30 +17,18 @@ const PokemonList = React.createClass({
         height: 0,
         weight: 0
       }]
-      // "species": []
     };
   },
   componentWillMount: function() {
     Actions.getPokemons();
-    console.log("this.state.name = " + this.state.name);
-    // if (this.state.name){
-    //   Actions.getSpecies(this.props.name);
-    // }
   },
-  // componentDidMount: function() {
-  //   console.log("componentDidMount");
-  // },
   onPokemonChange: function(event, pokemons) {
-    // console.log(...this.state.pokemons);
     this.setState({pokemons: pokemons});
   },
-  // onChange: function(event, species) {
-  //   this.setState({"species" : species});
-  //   console.log(this.state.species);
-  //   console.log(this.props.name);
-  // },
 
   render () {
+
+    // rearrange content by sorting with select method and input keywords
     var pokeSort = function(method) {
       switch(method) {
         case "sortByID":
@@ -76,27 +62,6 @@ const PokemonList = React.createClass({
 
     pokeSort(this.props.sortMethod);
 
-    // var pokeFilter = function(filterCondition) {
-    //   if (filterCondition.trim() !== "") {
-    //
-    //   }
-    // }
-    //
-    // pokeSort(this.props.filterCondition);
-
-    // var pokemonItems = this.state.pokemons.map((item) => {
-    //   return (
-    //     <PokemonItem
-    //       key={item.id}
-    //       id={item.id}
-    //       img={item.img}
-    //       name={item.name}
-    //       types={item.types}
-    //       /* height={item.height}
-    //       weight={item.weight} */
-    //     />
-    //   )
-    // });
     var isContainKeywords = function(item) {
       var regexp = new RegExp(this.props.filterCondition, "i");
       return (regexp.test(item.id) || regexp.test(item.name));
@@ -105,11 +70,12 @@ const PokemonList = React.createClass({
     var pokemonItems = this.state.pokemons.
     filter(isContainKeywords).
     map((item) => {
+      // turn first char into uppercase
       var upperCaseName = item.name;
       upperCaseName = item.name.substring(0,1).toUpperCase() +
                         item.name.substring(1,item.name.length);
-      // console.log("upperCaseName = " + upperCaseName);
-      // console.log("item.name = " + item.name);
+
+
       return (
         <PokemonItem
           key={item.id}
@@ -121,6 +87,12 @@ const PokemonList = React.createClass({
           weight={item.weight}
           ucName={upperCaseName}
           blurb={item.blurb}
+          category={item.category}
+          color={item.color}
+          shape={item.shape}
+          habitat={item.habitat}
+          growthRate={item.growthRate}
+          captureRate={item.captureRate}
           />
       )
     });

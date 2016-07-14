@@ -3,12 +3,14 @@ var React = require('react');
 var ItemHeader = React.createClass({
 
   render: function() {
+    // style
     var indexStyle = {
       float: "left"
     };
     var nameStyle = {
       float: "right"
     };
+    
     return (
       <div className="middle-title">
         &nbsp;

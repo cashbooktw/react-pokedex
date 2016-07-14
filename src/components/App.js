@@ -16,22 +16,25 @@ var Pokedex = React.createClass({
   render: function() {
     return (
       <div>
-        <PageHeader title="Pokemon Index">
+        {/*page header */}
+        <PageHeader title="Pokemon Index"></PageHeader>
 
-        </PageHeader>
+        {/* sort button */}
         <SortDropdown onChangeMethod={
             (method) => this.setState({
               "sortMethod": method
             })
           }
         />
+        {/* sort input text field */}
         <SearchBar onFilter={
             (filterCondition) => this.setState({
               "filterCondition": filterCondition
             })
           }
         />
-      <PokemonList sortMethod={this.state.sortMethod} filterCondition={this.state.filterCondition}/>
+        {/* main content */}
+        <PokemonList sortMethod={this.state.sortMethod} filterCondition={this.state.filterCondition}/>
       </div>
     );
   }
