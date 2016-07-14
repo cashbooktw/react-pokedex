@@ -40,4 +40,8 @@ body {
 }
 
 /*State*/
+.dropdown-menu > li {
+  cursor: pointer;
+}
+
 /*Theme*/

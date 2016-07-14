@@ -22122,7 +22122,6 @@ var ItemHeader = require('./ItemHeader');
 var ItemImg = require('./ItemImg');
 var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
-var speciesStore = require('../reflux/speciesStore');
 var ItemDetail = React.createClass({
   displayName: 'ItemDetail',
 
@@ -22324,7 +22323,7 @@ var ItemDetail = React.createClass({
 
 module.exports = ItemDetail;
 
-},{"../reflux/actions":202,"../reflux/speciesStore":204,"./ItemHeader":193,"./ItemImg":194,"react":170,"reflux":186}],193:[function(require,module,exports){
+},{"../reflux/actions":202,"./ItemHeader":193,"./ItemImg":194,"react":170,"reflux":186}],193:[function(require,module,exports){
 var React = require('react');
 
 var ItemHeader = React.createClass({
@@ -22418,7 +22417,6 @@ var ItemHeader = require('./ItemHeader');
 var ItemImg = require('./ItemImg');
 var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
-var speciesStore = require('../reflux/speciesStore');
 
 const PokemonItem = React.createClass({
   displayName: 'PokemonItem',
@@ -22442,6 +22440,9 @@ const PokemonItem = React.createClass({
       padding: 5
     };
 
+    var panelBodyStyle = {
+      cursor: "pointer"
+    };
     // take types from type array
     var pokemonTypes = this.props.types.map(item => {
       return React.createElement(PokemonType, { key: item, type: item });
@@ -22454,7 +22455,7 @@ const PokemonItem = React.createClass({
         { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12', style: itemConatiner },
         React.createElement(
           'div',
-          { className: 'panel panel-success', 'data-toggle': 'modal', 'data-target': "#" + this.props.name },
+          { style: panelBodyStyle, className: 'panel panel-success', 'data-toggle': 'modal', 'data-target': "#" + this.props.name },
           React.createElement(
             'div',
             { className: 'panel-heading' },
@@ -22498,13 +22499,12 @@ const PokemonItem = React.createClass({
 
 module.exports = PokemonItem;
 
-},{"../reflux/actions":202,"../reflux/speciesStore":204,"./ItemDetail":192,"./ItemHeader":193,"./ItemImg":194,"./PokemonType":198,"react":170,"reflux":186}],197:[function(require,module,exports){
+},{"../reflux/actions":202,"./ItemDetail":192,"./ItemHeader":193,"./ItemImg":194,"./PokemonType":198,"react":170,"reflux":186}],197:[function(require,module,exports){
 var React = require('react');
 var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
 var PokemonStore = require('../reflux/pokemonStore');
 var PokemonItem = require('./PokemonItem');
-var speciesStore = require('../reflux/speciesStore');
 
 const PokemonList = React.createClass({
   displayName: 'PokemonList',
@@ -22548,14 +22548,25 @@ const PokemonList = React.createClass({
           break;
         case "sortByNameAtoZ":
           var sortByNameAtoZ = function (a, b) {
-            return a.name > b.name;
+            if (a.name > b.name) {
+              return 1;
+            } else if (a.name < b.name) {
+              return -1;
+            } else {
+              return 0;
+            }
           };
           this.state.pokemons = this.state.pokemons.sort(sortByNameAtoZ);
           break;
-          break;
         case "sortByNameZtoA":
           var sortByNameZtoA = function (a, b) {
-            return b.name > a.name;
+            if (a.name < b.name) {
+              return 1;
+            } else if (a.name > b.name) {
+              return -1;
+            } else {
+              return 0;
+            }
           };
           this.state.pokemons = this.state.pokemons.sort(sortByNameZtoA);
           break;
@@ -22608,7 +22619,7 @@ const PokemonList = React.createClass({
 
 module.exports = PokemonList;
 
-},{"../reflux/actions":202,"../reflux/pokemonStore":203,"../reflux/speciesStore":204,"./PokemonItem":196,"react":170,"reflux":186}],198:[function(require,module,exports){
+},{"../reflux/actions":202,"../reflux/pokemonStore":203,"./PokemonItem":196,"react":170,"reflux":186}],198:[function(require,module,exports){
 var React = require('react');
 
 const PokemonType = React.createClass({
@@ -22743,38 +22754,22 @@ var SortDropdown = React.createClass({
           React.createElement(
             "li",
             { onClick: this.onClick.bind(this, "sortByID") },
-            React.createElement(
-              "a",
-              { href: "#" },
-              "Sort By ID"
-            )
+            "Sort By ID"
           ),
           React.createElement(
             "li",
             { onClick: this.onClick.bind(this, "sortByReverseID") },
-            React.createElement(
-              "a",
-              { href: "#" },
-              "Sort By Reverse ID"
-            )
+            "Sort By Reverse ID"
           ),
           React.createElement(
             "li",
             { onClick: this.onClick.bind(this, "sortByNameAtoZ") },
-            React.createElement(
-              "a",
-              { href: "#" },
-              "Sort By Name A-Z"
-            )
+            "Sort By Name A-Z"
           ),
           React.createElement(
             "li",
             { onClick: this.onClick.bind(this, "sortByNameZtoA") },
-            React.createElement(
-              "a",
-              { href: "#" },
-              "Sort By Name Z-A"
-            )
+            "Sort By Name Z-A"
           )
         )
       )
@@ -22815,7 +22810,7 @@ let PokemonStore = Reflux.createStore({
     var speciesUrl = "http://pokeapi.co/api/v2/pokemon-species/";
 
     // j is the index of pokemon
-    for (let j = 1; j < 151; j++) {
+    for (let j = 1; j < 50; j++) {
       // use index to get basic information, includes name
       HTTP.get(pokemonBaseUrl + "/" + j).then(function (json) {
 
@@ -22870,42 +22865,7 @@ let PokemonStore = Reflux.createStore({
 
 module.exports = PokemonStore;
 
-},{"../services/fetch":205,"./actions":202,"reflux":186}],204:[function(require,module,exports){
-let HTTP = require('../services/fetch');
-let Reflux = require('reflux');
-var Actions = require('./actions');
-
-let PokemonStore = Reflux.createStore({
-  listenables: [Actions],
-  getSpecies: function (name) {
-    this.species = [];
-    var speciesUrl = "http://pokeapi.co/api/v2/pokemon-species/";
-    var species = HTTP.get(speciesUrl + name).then(function (json) {
-      var rObj = {};
-
-      rObj.name = name.substring(0, 1).toUpperCase() + name.substring(1, name.length);
-
-      var flavorTexts = json.flavor_text_entries.map(function (item) {
-        return item.language.name == "en" ? item.flavor_text : "";
-      });
-      var arrayBlurb = [];
-      for (var index in flavorTexts) {
-        if (!arrayBlurb.includes(flavorTexts[index])) {
-          arrayBlurb.push(flavorTexts[index]);
-        }
-      };
-      var blurb = arrayBlurb[0] + ' ' + arrayBlurb[1];
-      rObj.blurb = blurb;
-      this.species.push(rObj);
-      this.trigger('change', this.species);
-    }.bind(this));
-  }
-
-});
-
-module.exports = PokemonStore;
-
-},{"../services/fetch":205,"./actions":202,"reflux":186}],205:[function(require,module,exports){
+},{"../services/fetch":204,"./actions":202,"reflux":186}],204:[function(require,module,exports){
 let Fetch = require('whatwg-fetch');
 
 let httpservice = {

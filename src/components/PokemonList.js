@@ -3,7 +3,6 @@ var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
 var PokemonStore = require('../reflux/pokemonStore');
 var PokemonItem = require('./PokemonItem');
-var speciesStore = require('../reflux/speciesStore');
 
 const PokemonList = React.createClass({
   mixins: [Reflux.listenTo(PokemonStore, 'onPokemonChange')],
@@ -45,14 +44,25 @@ const PokemonList = React.createClass({
           break;
         case "sortByNameAtoZ":
           var sortByNameAtoZ = function(a, b) {
-            return (a.name > b.name);
+            if (a.name > b.name) {
+              return 1;
+            } else if (a.name < b.name){
+              return -1;
+            } else {
+              return 0;
+            }
           }
           this.state.pokemons = this.state.pokemons.sort(sortByNameAtoZ);
           break;
-          break;
         case "sortByNameZtoA":
           var sortByNameZtoA = function(a, b) {
-            return (b.name > a.name);
+            if (a.name < b.name) {
+              return 1;
+            } else if (a.name > b.name){
+              return -1;
+            } else {
+              return 0;
+            }
           }
           this.state.pokemons = this.state.pokemons.sort(sortByNameZtoA);
           break;

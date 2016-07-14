@@ -13,7 +13,7 @@ let PokemonStore = Reflux.createStore({
     var speciesUrl = "http://pokeapi.co/api/v2/pokemon-species/";
 
     // j is the index of pokemon
-    for (let j = 1; j < 151; j++) {
+    for (let j = 1; j < 50; j++) {
       // use index to get basic information, includes name
       HTTP.get(pokemonBaseUrl + "/" + j).then(function(json) {
 

@@ -3,7 +3,6 @@ var ItemHeader = require('./ItemHeader');
 var ItemImg = require('./ItemImg');
 var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
-var speciesStore = require('../reflux/speciesStore');
 var ItemDetail = React.createClass({
   render: function() {
 

@@ -32,10 +32,10 @@ var SortDropdown = React.createClass({
         </button>
 
           <ul className="dropdown-menu">
-            <li onClick={this.onClick.bind(this, "sortByID")}><a href="#">Sort By ID</a></li>
-            <li onClick={this.onClick.bind(this, "sortByReverseID")}><a href="#">Sort By Reverse ID</a></li>
-            <li onClick={this.onClick.bind(this, "sortByNameAtoZ")}><a href="#">Sort By Name A-Z</a></li>
-            <li onClick={this.onClick.bind(this, "sortByNameZtoA")}><a href="#">Sort By Name Z-A</a></li>
+            <li onClick={this.onClick.bind(this, "sortByID")}>Sort By ID</li>
+            <li onClick={this.onClick.bind(this, "sortByReverseID")}>Sort By Reverse ID</li>
+            <li onClick={this.onClick.bind(this, "sortByNameAtoZ")}>Sort By Name A-Z</li>
+            <li onClick={this.onClick.bind(this, "sortByNameZtoA")}>Sort By Name Z-A</li>
           </ul>
         </div>
       </div>

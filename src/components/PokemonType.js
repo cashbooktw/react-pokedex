@@ -31,7 +31,7 @@ const PokemonType = React.createClass({
       marginTop: 5,
       float: "right"
     };
-    
+
     return (
       <div className="label label-default" style={pokemonTypeStyle}>{this.props.type}</div>
     )

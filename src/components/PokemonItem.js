@@ -5,7 +5,7 @@ var ItemHeader = require('./ItemHeader');
 var ItemImg = require('./ItemImg');
 var Reflux = require('reflux');
 var Actions = require('../reflux/actions');
-var speciesStore = require('../reflux/speciesStore');
+
 
 const PokemonItem = React.createClass({
   render () {
@@ -27,6 +27,9 @@ const PokemonItem = React.createClass({
       padding: 5,
     };
 
+    var panelBodyStyle = {
+      cursor: "pointer"
+    }
     // take types from type array
     var pokemonTypes = this.props.types.map((item) => {
       return <PokemonType key={item} type={item} />;
@@ -36,7 +39,7 @@ const PokemonItem = React.createClass({
     if (this.props.index !== 0) {
       return (
         <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" style={itemConatiner} >
-          <div className="panel panel-success" data-toggle="modal" data-target={"#" + this.props.name}>
+          <div style={panelBodyStyle} className="panel panel-success" data-toggle="modal" data-target={"#" + this.props.name}>
             <div className="panel-heading" >
               <ItemHeader index={this.props.index} ucName={this.props.ucName} img={this.props.img}/>
             </div>
